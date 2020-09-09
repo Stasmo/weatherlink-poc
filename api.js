@@ -20,8 +20,6 @@ module.exports = function(options) {
         for (var parameterName of parameterNamesSorted) {
             data = data + parameterName + parameters[parameterName];
         }
-
-        console.log(data)
         
         var hmac = crypto.createHmac("sha256", apiSecret);
         hmac.update(data);
@@ -55,6 +53,7 @@ module.exports = function(options) {
         };
         
         parameters["api-signature"] = getSignature(parameters)
+        delete parameters['station-id']
         let qs = `/historic/${stationId}?${querystring.stringify(parameters)}`
         let response = await client.get(qs)
 
@@ -70,11 +69,26 @@ module.exports = function(options) {
         };
         
         parameters["api-signature"] = getSignature(parameters)
+        delete parameters['station-id']
         let qs = `/current/${stationId}?${querystring.stringify(parameters)}`
         let response = await client.get(qs)
 
         return response
     }
 
-    return { getStationHistoricData, getStations, getStationCurrentData }
+    async function getSensors() {
+
+        var parameters = {
+            "api-key": apiKey,
+            "t": Math.floor(Date.now() / 1000),
+        };
+        
+        parameters["api-signature"] = getSignature(parameters)
+        let qs = `/sensors?${querystring.stringify(parameters)}`
+        let response = await client.get(qs)
+
+        return response
+    }
+
+    return { getStationHistoricData, getStations, getStationCurrentData, getSensors }
 }

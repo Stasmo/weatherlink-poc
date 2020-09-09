@@ -4,12 +4,16 @@
   "description": "",
   "main": "api.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-docker": "docker build -t stasmo/weatherlinkscanner ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.2",
-    "crypto": "^1.0.1"
+    "crypto": "^1.0.1",
+    "csv-parse": "^4.12.0",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31"
   }
 }
