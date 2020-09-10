@@ -153,7 +153,7 @@ const columns = [
 
 
 if (!fs.existsSync(sheetName)) {
-    fs.appendFileSync(sheetName, columns.join(',') + "\n")
+    fs.appendFileSync(sheetName, `"` + columns.join('","') + "\"\n")
 }
 
 setInterval(getData, readIntervalSeconds * 1000)
