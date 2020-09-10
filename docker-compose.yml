@@ -5,3 +5,7 @@ services:
     build: ./
     image: stasmo/weatherlinkscanner
     command: npm start
+    environment:
+      WEATHERLINK_API_KEY: $WEATHERLINK_API_KEY
+      WEATHERLINK_API_SECRET: $WEATHERLINK_API_SECRET
+    restart: always
