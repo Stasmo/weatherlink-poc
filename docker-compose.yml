@@ -11,4 +11,4 @@ services:
       SHEET_NAME: $SHEET_NAME
     restart: always
     volumes:
-      - "/files:$FILE_DIRECTORY"
+      - "$FILE_DIRECTORY:/files"
