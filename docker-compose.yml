@@ -8,6 +8,7 @@ services:
     environment:
       WEATHERLINK_API_KEY: $WEATHERLINK_API_KEY
       WEATHERLINK_API_SECRET: $WEATHERLINK_API_SECRET
+      SHEET_NAME: $SHEET_NAME
     restart: always
     volumes:
       - "/files:$FILE_DIRECTORY"
