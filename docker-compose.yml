@@ -9,3 +9,5 @@ services:
       WEATHERLINK_API_KEY: $WEATHERLINK_API_KEY
       WEATHERLINK_API_SECRET: $WEATHERLINK_API_SECRET
     restart: always
+    volumes:
+      - "/files:$FILE_DIRECTORY"
