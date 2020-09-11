@@ -4,7 +4,6 @@ const fs = require('fs')
 
 const stationId = process.env.STATION_ID || 96918
 
-const sheetName = process.env.SHEET_NAME || 'weatherlink-data.csv'
 const readIntervalSeconds = process.env.READ_INTERVAL || 12
 
 async function getData() {
@@ -19,6 +18,12 @@ async function getData() {
 }
 
 function writeToCsv(data) {
+    let d = moment()
+    let sheetName = `weatherlink-data-${d.format('YYYY-MM-DD')}.csv`
+    if (!fs.existsSync(sheetName)) {
+        fs.appendFileSync(sheetName, `"` + columns.join('","') + "\"\n")
+    }
+
     let rowData = { 'Timestamp': moment.unix(data.generated_at).tz('America/Vancouver').format() }
     let sensors = {}
     data.sensors.map(s =>sensors[s.lsid] = s)
@@ -152,8 +157,5 @@ const columns = [
 ]
 
 
-if (!fs.existsSync(sheetName)) {
-    fs.appendFileSync(sheetName, `"` + columns.join('","') + "\"\n")
-}
 
 setInterval(getData, readIntervalSeconds * 1000)
