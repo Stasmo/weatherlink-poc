@@ -1,10 +1,12 @@
 const client = require('./api')()
 const moment = require('moment-timezone')
 const fs = require('fs')
+const path = require('path')
 
 const stationId = process.env.STATION_ID || 96918
 
 const readIntervalSeconds = process.env.READ_INTERVAL || 12
+const sheetDirectory = process.env.SHEET_DIR || '.'
 
 async function getData() {
     try {
@@ -19,7 +21,7 @@ async function getData() {
 
 function writeToCsv(data) {
     let d = moment()
-    let sheetName = `weatherlink-data-${d.format('YYYY-MM-DD')}.csv`
+    let sheetName = path.join(sheetDirectory ,`weatherlink-data-${d.format('YYYY-MM-DD')}.csv`)
     if (!fs.existsSync(sheetName)) {
         fs.appendFileSync(sheetName, `"` + columns.join('","') + "\"\n")
     }
