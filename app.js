@@ -59,6 +59,7 @@ let idToNameMap = {
 }
 
 const translations = {
+    "Timestamp": "timestamp",
     "Barometer: bar_absolute": "bar_absolute",
     "Barometer: bar_sea_level": "bar_sealevel",
     "Barometer: bar_offset": "bar_offset",
@@ -99,7 +100,6 @@ const translations = {
     "Vantage Vue, Wireless: wind_speed_avg_last_1_min": "wind_1min_avg_speed",
     "Vantage Vue, Wireless: rain_rate_last_mm": "rainrate",
     "Vantage Vue, Wireless: rain_rate_hi_last_15_min_mm": "rainrate_15min",
-    "Vantage Vue, Wireless: ts": "Vantage_Vue_TS",
 }
 
 const columns = [
