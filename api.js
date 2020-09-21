@@ -2,7 +2,6 @@ const crypto = require("crypto");
 const axios = require('axios');
 const querystring = require('querystring');
 
-
 module.exports = function(options) {
     const client = axios.create({
         baseURL: "https://api.weatherlink.com/v2"
@@ -26,6 +25,34 @@ module.exports = function(options) {
         var apiSignature = hmac.digest("hex");
 
         return apiSignature
+    }
+
+    async function getSensorCatalogue() {
+
+        var parameters = {
+            "api-key": apiKey,
+            "t": Math.floor(Date.now() / 1000),
+        };
+        
+        parameters["api-signature"] = getSignature(parameters)
+        let qs = `/sensor-catalog?${querystring.stringify(parameters)}`
+        let response = await client.get(qs)
+
+        return response
+    }
+
+    async function getSensors() {
+
+        var parameters = {
+            "api-key": apiKey,
+            "t": Math.floor(Date.now() / 1000),
+        };
+        
+        parameters["api-signature"] = getSignature(parameters)
+        let qs = `/sensors?${querystring.stringify(parameters)}`
+        let response = await client.get(qs)
+
+        return response
     }
 
     async function getStations() {
@@ -76,19 +103,11 @@ module.exports = function(options) {
         return response
     }
 
-    async function getSensors() {
-
-        var parameters = {
-            "api-key": apiKey,
-            "t": Math.floor(Date.now() / 1000),
-        };
-        
-        parameters["api-signature"] = getSignature(parameters)
-        let qs = `/sensors?${querystring.stringify(parameters)}`
-        let response = await client.get(qs)
-
-        return response
+    return {
+        getSensorCatalogue,
+        getSensors,
+        getStationHistoricData,
+        getStations,
+        getStationCurrentData,
     }
-
-    return { getStationHistoricData, getStations, getStationCurrentData, getSensors }
 }

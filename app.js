@@ -27,7 +27,7 @@ function writeToCsv(data) {
         fs.appendFileSync(sheetName, Object.values(translations).join(',') + "\n")
     }
 
-    let rowData = { 'Timestamp': moment.unix(data.generated_at).toISOString() }
+    let rowData = { 'Timestamp': moment.unix(data.generated_at).format() }
     let sensors = {}
     data.sensors.map(s =>sensors[s.lsid] = s)
     
@@ -38,7 +38,7 @@ function writeToCsv(data) {
             Object.keys(dataItem).map(rowName => {
                 let rowValue = dataItem[rowName]
                 if (rowValue != null && ['ts', 'rain_storm_start_time', 'rain_storm_last_end_at', 'rain_storm_last_start_at'].includes(rowName)) {
-                    let timedata = moment.unix(rowValue).toISOString()
+                    let timedata = moment.unix(rowValue).format()
                     rowData[`${productName}: ${rowName}`] = timedata
                 } else {
                     rowData[`${productName}: ${rowName}`] = rowValue
